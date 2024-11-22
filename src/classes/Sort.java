@@ -1,19 +1,20 @@
+package classes;
 
 import java.io.Serializable;
+
 
 public class Sort implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private int[] vector;
     private int sort;
-    private float time;
+    public float time;
     private boolean finished = false;
     static final int MERGESORT = 1;
     static final int HEAPSORT = 2;
     static final int QUICKSORT = 3;
     private int workerID;
     private long finishTime;
-    public long tiempoInicio;
 
     public Sort(int[] vector, int sort, long finishTime) {
         this.vector = vector;
@@ -22,7 +23,6 @@ public class Sort implements Serializable {
         this.time = 0;
         this.workerID = 0;
         this.finishTime = finishTime;
-
     }
 
     public int[] getVector() {
@@ -45,9 +45,12 @@ public class Sort implements Serializable {
         return this.workerID;
     }
 
+    public long getFinishTime(){
+        return this.finishTime;
+    }
+        
     public void sort(int workerId) {
-        this.tiempoInicio = System.currentTimeMillis();
-
+        this.workerID = workerId;
         switch (this.sort) {
             case MERGESORT:
                 this.mergeSort(this.vector, 0, vector.length - 1);
@@ -57,12 +60,7 @@ public class Sort implements Serializable {
 
             case QUICKSORT:
                 this.quickSort(this.vector, 0, vector.length - 1);
-
         }
-
-        // Actualización del ID y tiempo de ordenamiento
-        this.workerID = workerId;
-        this.time += System.currentTimeMillis() - this.tiempoInicio;
     }
 
     public void mergeSort(int[] array, int left, int right) {
@@ -79,7 +77,7 @@ public class Sort implements Serializable {
     }
 
     public void merge(int arr[], int left, int middle, int right) {
-        
+
         //Encuentra el tamaño de los sub-vectores para unirlos.
         int n1 = middle - left + 1;
         int n2 = right - middle;
@@ -87,7 +85,7 @@ public class Sort implements Serializable {
         //Vectores temporales.
         int leftArray[] = new int[n1];
         int rightArray[] = new int[n2];
-        
+
         //Copia los datos a los arrays temporales.
         for (int i = 0; i < n1; i++) {
             leftArray[i] = arr[left + i];
@@ -95,7 +93,6 @@ public class Sort implements Serializable {
         for (int j = 0; j < n2; j++) {
             rightArray[j] = arr[middle + j + 1];
         }
-        /* Une los vectorestemporales. */
 
         //Índices inicial del primer y segundo sub-vector.
         int i = 0, j = 0;
@@ -103,7 +100,7 @@ public class Sort implements Serializable {
         //Índice inicial del sub-vector arr[].
         int k = left;
 
-        //Ordenamiento.
+        //Ordenamiento
         while (i < n1 && j < n2) {
             if (leftArray[i] <= rightArray[j]) {
                 arr[k] = leftArray[i];
@@ -113,9 +110,9 @@ public class Sort implements Serializable {
                 j++;
             }
             k++;
-        }//Fin del while.
+        }
 
-        /* Si quedan elementos por ordenar */
+        //Si quedan elementos por ordenar 
         //Copiar los elementos restantes de leftArray[].
         while (i < n1) {
             arr[k] = leftArray[i];
@@ -128,7 +125,7 @@ public class Sort implements Serializable {
             j++;
             k++;
         }
-        
+
     }
 
     public void heapSort(int[] array) {
@@ -140,17 +137,17 @@ public class Sort implements Serializable {
         // One by one extract an element from heap
         for (int i = n - 1; i > 0; i--) {
             // Move current root to end
-            int temp = array[0]; 
+            int temp = array[0];
             array[0] = array[i];
             array[i] = temp;
             // Call max heapify on the reduced heap
             heapify(array, i, 0);
         }
     }
-    
+
     public void heapify(int arr[], int n, int i) {
-        int largest = i; 
-        int l = 2 * i + 1; 
+        int largest = i;
+        int l = 2 * i + 1;
         int r = 2 * i + 2;
         // If left child is larger than root
         if (l < n && arr[l] > arr[largest]) {
@@ -172,38 +169,28 @@ public class Sort implements Serializable {
     }
 
     public void quickSort(int[] array, int low, int high) {
-        if(low<high){
-            int pi=partition(array,low,high);
-            quickSort(array,low,pi-1);
-            quickSort(array,pi+1,high);
+        if (low < high) {
+            int pi = partition(array, low, high);
+            quickSort(array, low, pi - 1);
+            quickSort(array, pi + 1, high);
         }
     }
-    
-    public int partition(int[] array, int low, int high){
-        int pivot=array[high];
-        int i=low-1;
+
+    public int partition(int[] array, int low, int high) {
+        int pivot = array[high];
+        int i = low - 1;
         int temp;
-        for(int j=low;j<high;j++){
-            if(this.excedeTiempoLimite()){
-                break;
-            }
-            if(array[j]<=pivot){
+        for (int j = low; j < high; j++) {
+            if (array[j] <= pivot) {
                 i++;
-                temp=array[i];
-                array[i]=array[j];
-                array[j]=temp;
+                temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
             }
         }
-        temp=array[i+1];
-        array[i+1]=array[high];
-        array[high]=temp;
-        return i+1;
+        temp = array[i + 1];
+        array[i + 1] = array[high];
+        array[high] = temp;
+        return i + 1;
     }
-
-    public boolean excedeTiempoLimite() {
-        long tiempoActual = System.currentTimeMillis();
-        long tiempoTranscurrido = tiempoActual - this.tiempoInicio;
-        return tiempoTranscurrido >= this.finishTime;
-    }
-
 }

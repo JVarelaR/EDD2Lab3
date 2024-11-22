@@ -1,3 +1,5 @@
+package classes;
+
 public class config {
     public static final String CLIENT_IP = "localhost";
     public static final int CLIENT_PORT = 5000;

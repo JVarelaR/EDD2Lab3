@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/RYZEN/Desktop/EDD2Lab3/src/worker_1.java</file>
-            <file>file:/C:/Users/RYZEN/Desktop/EDD2Lab3/src/Client.java</file>
-            <file>file:/C:/Users/RYZEN/Desktop/EDD2Lab3/src/worker_0.java</file>
-            <file>file:/C:/Users/RYZEN/Desktop/EDD2Lab3/src/config.java</file>
-            <file>file:/C:/Users/RYZEN/Desktop/EDD2Lab3/src/Sort.java</file>
+            <file>file:/C:/Users/RYZEN/Desktop/EDD2Lab3/src/classes/Sort.java</file>
+            <file>file:/C:/Users/RYZEN/Desktop/EDD2Lab3/src/classes/Client.java</file>
+            <file>file:/C:/Users/RYZEN/Desktop/EDD2Lab3/src/classes/worker_1.java</file>
+            <file>file:/C:/Users/RYZEN/Desktop/EDD2Lab3/src/classes/config.java</file>
+            <file>file:/C:/Users/RYZEN/Desktop/EDD2Lab3/src/classes/worker_0.java</file>
         </group>
     </open-files>
 </project-private>
