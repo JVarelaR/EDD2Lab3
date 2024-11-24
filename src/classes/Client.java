@@ -11,23 +11,36 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Random;
 
 public class Client {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Scanner read = new Scanner(System.in);
-        String HOST = config.CLIENT_IP;
+        String CLIENT_HOST = config.CLIENT_IP;
+        String WORKER0_HOST = config.WORKER0_IP;
+        String WORKER1_HOST = config.WORKER1_IP;
         int WORKER0PORT = config.WORKER_0_PORT;
         int CLIENT_PORT = config.CLIENT_PORT;
         int[] array;
 
+        
+        /*
+        //Creacion del array aleatorio
+        int n = 50000;
+        array=new int[n];
+        for(int i=0;i<n;i++){
+            array[i]= new Random().nextInt(10000);
+        }
+        */
+        
         
         // Lectura del archivo
         FileReader fr = new FileReader("src/texts/array.txt");
         BufferedReader br = new BufferedReader(fr);
         String linea;
         int i = 0;
-        while ((linea = br.readLine()) != null) {
+        while ((br.readLine()) != null) {
             i++;
         }
         br.close();
@@ -43,6 +56,8 @@ public class Client {
         }
         br.close();
         
+        
+        System.out.print("--------------------------- Ordenamiento -------------------------");
         
         //Establecimiento del tiempo para ordenar
         System.out.print("\nDigite el tiempo que debe tardar cada worker (en milisegundos): ");
@@ -64,7 +79,7 @@ public class Client {
         Sort message = new Sort(array, sort, time);
 
         try (
-                ServerSocket server = new ServerSocket(CLIENT_PORT); Socket workerSocket = new Socket(HOST, WORKER0PORT); ObjectOutputStream out = new ObjectOutputStream(workerSocket.getOutputStream())) {
+                ServerSocket server = new ServerSocket(CLIENT_PORT); Socket workerSocket = new Socket(WORKER0_HOST, WORKER0PORT); ObjectOutputStream out = new ObjectOutputStream(workerSocket.getOutputStream())) {
             // Envía el objeto Sort al worker0
             out.writeObject(message);
             out.flush();

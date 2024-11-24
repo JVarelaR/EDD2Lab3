@@ -16,6 +16,8 @@ public class worker_1 {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         String CLIENT_HOST = config.CLIENT_IP;
+        String WORKER0_HOST = config.WORKER0_IP;
+        String WORKER1_HOST = config.WORKER1_IP;
         int CLIENT_PORT = config.CLIENT_PORT;
         int WORKER0PORT = config.WORKER_0_PORT;
         int WORKER1PORT = config.WORKER_1_PORT;
@@ -61,8 +63,8 @@ public class worker_1 {
                         future.cancel(true);
                         messageReceived.time += tiempoMaximo;
                         System.out.println("Tiempo agotado. Pasando al siguiente worker.");
-
-                        try (Socket nextWorkerSocket = new Socket(CLIENT_HOST, WORKER0PORT); ObjectOutputStream out = new ObjectOutputStream(nextWorkerSocket.getOutputStream())) {
+                        //messageReceived.updateArray();
+                        try (Socket nextWorkerSocket = new Socket(WORKER0_HOST, WORKER0PORT); ObjectOutputStream out = new ObjectOutputStream(nextWorkerSocket.getOutputStream())) {
                             out.writeObject(messageReceived);
                         }
                     }

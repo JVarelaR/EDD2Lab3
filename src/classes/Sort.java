@@ -2,27 +2,26 @@ package classes;
 
 import java.io.Serializable;
 
-
 public class Sort implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private int[] vector;
     private int sort;
     public float time;
-    private boolean finished = false;
     static final int MERGESORT = 1;
     static final int HEAPSORT = 2;
     static final int QUICKSORT = 3;
     private int workerID;
     private long finishTime;
+    private int[] tempArray;
 
     public Sort(int[] vector, int sort, long finishTime) {
         this.vector = vector;
         this.sort = sort;
-        this.finished = false;
         this.time = 0;
         this.workerID = 0;
         this.finishTime = finishTime;
+        this.tempArray = vector;
     }
 
     public int[] getVector() {
@@ -33,10 +32,6 @@ public class Sort implements Serializable {
         return sort;
     }
 
-    public boolean isFinished() {
-        return finished;
-    }
-
     public float getTime() {
         return this.time;
     }
@@ -45,10 +40,10 @@ public class Sort implements Serializable {
         return this.workerID;
     }
 
-    public long getFinishTime(){
+    public long getFinishTime() {
         return this.finishTime;
     }
-        
+
     public void sort(int workerId) {
         this.workerID = workerId;
         switch (this.sort) {
@@ -63,6 +58,10 @@ public class Sort implements Serializable {
         }
     }
 
+    public void updateArray(){
+        this.vector=this.tempArray;
+    }
+    
     public void mergeSort(int[] array, int left, int right) {
         if (left < right) {//Encuentra el punto medio del vector.
             int middle = (left + right) / 2;
@@ -74,6 +73,8 @@ public class Sort implements Serializable {
             //Une las mitades.
             merge(array, left, middle, right);
         }
+
+        this.tempArray = array.clone(); //Copia del vector ordenado
     }
 
     public void merge(int arr[], int left, int middle, int right) {
@@ -134,6 +135,9 @@ public class Sort implements Serializable {
         for (int i = n / 2 - 1; i >= 0; i--) {
             heapify(array, n, i);
         }
+
+        this.tempArray = array.clone(); //Copia del vector ordenado
+
         // One by one extract an element from heap
         for (int i = n - 1; i > 0; i--) {
             // Move current root to end
@@ -173,6 +177,10 @@ public class Sort implements Serializable {
             int pi = partition(array, low, high);
             quickSort(array, low, pi - 1);
             quickSort(array, pi + 1, high);
+        }
+
+        if (low == 0 && high == array.length - 1) {
+            this.tempArray = array.clone(); //Copia del vector ordenado 
         }
     }
 
