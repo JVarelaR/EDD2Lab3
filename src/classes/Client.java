@@ -101,15 +101,15 @@ public class Client {
                 
                 //Escribir un archivo con el vector ordenado
                 try {
-                    // Crear un BufferedWriter para escribir en el archivo
                     BufferedWriter writer = new BufferedWriter(new FileWriter("src/texts/sortedArray.txt"));
-                    writer.write(Arrays.toString(messageReceived.getVector()));
-
-                    // Cerrar el BufferedWriter
+                    for(int j=0;j<messageReceived.getVector().length;j++){
+                        writer.write(messageReceived.getVector()[j]+"\n");
+                    }
                     writer.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                
 
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();

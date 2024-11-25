@@ -74,7 +74,7 @@ public class Sort implements Serializable {
             merge(array, left, middle, right);
         }
 
-        this.tempArray = array.clone(); //Copia del vector ordenado
+        
     }
 
     public void merge(int arr[], int left, int middle, int right) {
@@ -131,20 +131,20 @@ public class Sort implements Serializable {
 
     public void heapSort(int[] array) {
         int n = array.length;
-        // Build heap (rearrange array)
+        // Construye la pila
         for (int i = n / 2 - 1; i >= 0; i--) {
             heapify(array, n, i);
         }
 
         this.tempArray = array.clone(); //Copia del vector ordenado
 
-        // One by one extract an element from heap
+        // Extrae elementos de la pila
         for (int i = n - 1; i > 0; i--) {
-            // Move current root to end
+            // Se mueve la raiz al final
             int temp = array[0];
             array[0] = array[i];
             array[i] = temp;
-            // Call max heapify on the reduced heap
+
             heapify(array, i, 0);
         }
     }
@@ -153,21 +153,20 @@ public class Sort implements Serializable {
         int largest = i;
         int l = 2 * i + 1;
         int r = 2 * i + 2;
-        // If left child is larger than root
+
         if (l < n && arr[l] > arr[largest]) {
             largest = l;
         }
-        // If right child is larger than largest so far
+
         if (r < n && arr[r] > arr[largest]) {
             largest = r;
         }
-        // If largest is not root
+
         if (largest != i) {
             int temp = arr[i];
             arr[i] = arr[largest];
             arr[largest] = temp;
 
-            // Recursively heapify the affected sub-tree
             heapify(arr, n, largest);
         }
     }
